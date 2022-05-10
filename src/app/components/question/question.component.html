@@ -1,0 +1,51 @@
+<form [formGroup]="questionForm" *ngIf="questionForm">
+  <ng-container *ngFor="let question of questions | async" [ngTemplateOutlet]="questionBody"
+    [ngTemplateOutletContext]="{question:question, control:questionForm.get(question.title)}"></ng-container>
+</form>
+
+<ng-template #questionBody let-question="question" let-control="control">
+  <div class="question">
+    <div class="input">
+
+      <ng-container [ngSwitch]="question.type">
+        <ng-template ngSwitchCase="radio">
+          <mat-radio-group [formControl]="control">
+            <mat-label>{{question.title}}</mat-label>
+            <mat-radio-button value="1">Yes</mat-radio-button>
+            <mat-radio-button value="2">No</mat-radio-button>
+          </mat-radio-group>
+        </ng-template>
+
+        <ng-template ngSwitchCase="select">
+          <mat-label>{{question.title}}</mat-label>
+          <mat-form-field appearance="outline">
+
+            <mat-select [formControl]="control">
+              <mat-select-trigger>
+                {{control.value}}
+              </mat-select-trigger>
+              <mat-option *ngFor="let option of question.options" [value]="option">{{option}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-template>
+
+        <ng-template ngSwitchDefault>
+          <mat-label>{{question.title}}</mat-label>
+          <mat-form-field appearance="outline">
+            <input [type]="question.type" matInput [formControl]="control">
+          </mat-form-field>
+        </ng-template>
+      </ng-container>
+    </div>
+
+    <div class="sub-question" *ngIf="question.childItems?.length">
+      <ng-container *ngFor="let subquestion of question.childItems">
+        <ng-container *ngIf="!subquestion.parentAnswer || subquestion.parentAnswer === control.value">
+          <ng-container [ngTemplateOutlet]="questionBody"
+            [ngTemplateOutletContext]="{question:subquestion, control:control.parent.get('sub-' + question.title).get(subquestion.title)}">
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

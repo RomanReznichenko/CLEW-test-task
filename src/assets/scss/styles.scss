@@ -1,0 +1,41 @@
+mat-radio-button {
+  margin-right: 15px;
+
+  &.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+  &.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: rgb(40, 149, 238)
+  }
+
+  .mat-ripple-element {
+    background-color: rgb(40, 149, 238) !important;
+  }
+
+  .mat-radio-outer-circle {
+    border-color: rgb(164, 167, 167) !important;
+  }
+
+  &.mat-radio-checked {
+    .mat-radio-outer-circle {
+      border-color: rgb(40, 149, 238) !important;
+    }
+  }
+
+  .mat-radio-inner-circle {
+    background-color: rgb(40, 149, 238) !important;
+  }
+
+  .mat-ripple-element .mat-radio-persistent-ripple {
+    background-color: rgb(40, 149, 238) !important;
+  }
+}
+
+mat-form-field {
+  .mat-form-field-outline {
+    top: 0;
+  }
+
+  .mat-form-field-infix {
+    padding: 0.5em 0 !important;
+    border: none !important;
+  }
+}
